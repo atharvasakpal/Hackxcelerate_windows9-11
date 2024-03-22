@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connected Devices</title>
+</head>
+<body>
+    <center>
+        <h1>Connected Devices</h1>
+        <% for (let i of devices) { %>
+            <ul>
+                <li><%= i.device %> (<%= i.state %>)
+                    <a href="#" class="remote-link" data-device="<%= i.device %>" style="color: blue;">Remote</a>
+                </li>
+            </ul>
+        <% } %>
+    </center>
+    <a href="/homepage">Home Page</a>
+
+    <!-- Include JavaScript at the end of the body
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const remoteLinks = document.querySelectorAll('.remote-link');
+            remoteLinks.forEach(link => {
+                link.addEventListener('click', function(event) {
+                    event.preventDefault(); // Prevent the default link behavior
+                    const device = this.getAttribute('data-device');
+                    // Send a POST request to /scrcpy endpoint
+                    fetch('/scrcpy', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ device: device })
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            console.log('Form submitted successfully');
+                            // Handle success response if needed
+                        } else {
+                            console.error('Form submission failed');
+                            // Handle failure response if needed
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error submitting form:', error);
+                        // Handle network errors if needed
+                    });
+                });
+            });
+        });
+    </script> -->
+</body>
+</html>
