@@ -40,6 +40,10 @@ git clone the project and use npm
 
 **Server:** Node, Express
 
+**Authentication:** Passport.js
+
+**Password Hashing:** Bcrypt
+
 
 ## Screenshots
 
