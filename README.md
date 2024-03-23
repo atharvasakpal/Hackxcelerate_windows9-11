@@ -58,7 +58,7 @@ git clone the project and use npm
 ![](https://raw.githubusercontent.com/atharvasakpal/Hackxcelerate_windows9-11/main/screenshots/WhatsApp%20Image%202024-03-23%20at%2012.30.20.jpeg)
 
 
-
+![](https://raw.githubusercontent.com/atharvasakpal/Hackxcelerate_windows9-11/main/screenshots/WhatsApp%20Image%202024-03-23%20at%2013.38.29.jpeg)
 ## Team Members (Windows9/11)
 
 - Ishayu Potey
