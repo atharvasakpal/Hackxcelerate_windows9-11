@@ -9,6 +9,7 @@ const {exec} = require('child_process');
 const LocalStrategy = require('passport-local').Strategy;
 const crypto = require('crypto');
 const adb = require('adbkit'); 
+const path =  require('path');
 
 const client = adb.createClient();
 const disconnectDevices = (req, res, next) => {
@@ -410,6 +411,58 @@ app.post('/deviceDetails',(req,res)=>{
  });
  res.render('showDeviceDetails',{batteryPercentage});
 });
+
+
+
+app.get('/openADBshell',(req,res)=>{
+  exec(`adb devices`,(error,stdout,stderr)=>{
+    //error handling
+    if (error) {
+      console.error(`Error: ${error.message}`);
+      return res.status(500).send('Error occurred');
+    }
+    if (stderr) {
+      console.error(`ADB Error: ${stderr}`);
+      return res.status(500).send('ADB Error occurred');
+    }
+  
+    //showing the devices
+    const devices= stdout.split('\n').slice(1).filter(line => line.trim() !== '').map(line => {
+      const [device, state] = line.trim().split('\t');
+      return { device, state };
+    });
+    //get the list of deviceNames
+    // let deviceName = [];
+    // for (i of devices){
+    //   // deviceName.push(exec(`adb -s ${i['device']} shell getprop ro.product.marketname`));
+    //   deviceName.push(i['device']);
+    // }
+    // res.send(deviceName);
+    // res.send(devices);
+
+
+    // const openShell = req.body.openADBshell;
+    // res.send('Post request working');
+    const command  = `.\commandprompt.bat `;
+    //executing the batch file with the IP address passed as an argument
+    exec(command, (error,stdout,stderr)=>{
+      if(error){
+        console.error(`exec error: ${error}`);
+        return res.status(500).send('Error executing command');
+      }
+      console.log(`stdout: ${stdout}`);
+      console.error(`stderr: ${stderr}`);
+      res.send('ADB shell opened successfully');
+    })
+    //  res.render('openADBshell',{devices});
+})
+})
+
+// app.post('/openADBshell',(req,res)=>{
+    
+// })
+
+
 
 
 // //scrcpy
