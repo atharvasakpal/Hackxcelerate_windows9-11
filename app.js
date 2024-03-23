@@ -295,7 +295,7 @@ app.post('/connectDevice',(req,res)=>{
        return res.status(500).send('ADB Error occurred during pairing');
      }
      console.log(`Connection successful: ${stdout}`);
-     res.send(`Pairing & Connection successful <a href='/'>home</a>`);
+     res.send(`Pairing & Connection successful <a href='/homepage'>home</a>`);
    })
 })
 

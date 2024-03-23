@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Connect Device</title>
+    <title>Device Details</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -17,16 +17,15 @@
         }
 
         .container {
-            max-width: 400px;
+            max-width: 600px;
             background-color: #fff;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             padding: 40px;
-            box-sizing: border-box;
-            text-align: center;
         }
 
         h1 {
+            text-align: center;
             color: #333;
             margin-bottom: 30px;
             font-size: 24px;
@@ -38,37 +37,58 @@
             align-items: center;
         }
 
-        input[type="text"] {
+        select {
             width: 100%;
-            padding: 10px;
-            margin-bottom: 20px;
+            padding: 12px 20px;
+            margin-bottom: 30px;
             border: 1px solid #ccc;
             border-radius: 5px;
             box-sizing: border-box;
+            font-size: 18px;
         }
 
-        button {
-            padding: 10px 20px;
+        input[type="submit"] {
+            width: 100%;
+            padding: 15px 20px;
             background-color: #4CAF50;
             color: #fff;
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            font-size: 18px;
             transition: background-color 0.3s;
         }
 
-        button:hover {
+        input[type="submit"]:hover {
             background-color: #45a049;
+        }
+
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #007bff;
+            text-decoration: none;
+            font-size: 18px;
+        }
+
+        a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Connect Device</h1>
-        <form action="/connectDevice" method="post">
-            <input type="text" name="port" placeholder="Enter Connection Port" required>
-            <button type="submit">Connect</button>
+        <h1>Device Details</h1>
+        <form action="deviceDetails" method="post">
+            <select name="deviceDetails" id="deviceDetails">
+                <%for( let i of devices ){ %>
+                    <option value="<%= i['device'] %>"> <%= i['device'] %></option> 
+                <%}%>
+            </select>
+            <input type="submit" name="submit" id="submit" value="Get Details">
         </form>
+        <a href="/">Home Page</a>
     </div>
 </body>
 </html>

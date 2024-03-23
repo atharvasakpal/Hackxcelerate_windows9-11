@@ -4,26 +4,95 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Screen Mirror</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            max-width: 400px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 24px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 30px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 16px;
+            appearance: none;
+            background-color: #fff;
+            cursor: pointer;
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            padding: 15px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #007bff;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-    <center><h1>Choose Device to mirror</h1></center>
-    
-    <center>
+    <div class="container">
+        <h1>Choose Device to Mirror</h1>
         <form action="screenmirror" method="post">
-    <select name="deviceSelect" id="deviceSelect">
-        <%for( let i of devices ){ %>
-            <option value="<%= i['device'] %>"> <%= i['device'] %></option> 
-        <%}%>
-    
-    </select>
-    <input type="submit" name="submit" id="submit" value="Mirror">
-    
-    </form>
-    <!-- <form action="showDetails" method="post">
-        <input type="submit" name="showDetails" id="showDetails" value="show Details">
-    </form>
-     --> 
-    </center>
-    <a href="/homepage"> home page</a>
+            <select name="deviceSelect" id="deviceSelect">
+                <%for( let i of devices ){ %>
+                    <option value="<%= i['device'] %>"> <%= i['device'] %></option> 
+                <%}%>
+            </select>
+            <input type="submit" name="submit" id="submit" value="Mirror">
+        </form>
+        <a href="/homepage">Home Page</a>
+    </div>
 </body>
 </html>

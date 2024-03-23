@@ -8,10 +8,16 @@
     body {
       font-family: sans-serif;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
       min-height: 100vh;
       background-color: #f0f0f0;
+    }
+
+    .login-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     .login-form {
@@ -19,6 +25,11 @@
       padding: 50px;
       border-radius: 20px;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      margin-top: 20px; /* Adjust spacing between header and form */
+    }
+
+    h1 {
+      font-size: 36px; /* Increased font size */
     }
 
     .login-form h1 {
@@ -56,36 +67,55 @@
   </style>
 </head>
 <body>
-  <h1 style="text-align: center;">Android Device Manager</h1>
-  <% if (!locals.user) { %>
-  <div class="login-form">
-    <h1>Login</h1>
-    <p id="error-message" class="error-message"></p>
-    <form action="/login" method="post">
-      <label for="username">Username:</label>
-      <input type="text" id="username" name="username" required><br>
+  <header>
+    <h1>Android Device Manager</h1>
+  </header>
 
-      <label for="password">Password:</label>
-      <input type="password" id="password" name="password" required><br>
+  <div class="login-container">
+    <% if (!locals.user) { %>
+    <div class="login-form">
+      <h2>Login</h2>
+      <p id="error-message" class="error-message"></p>
+      <form action="/login" method="post">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required><br>
 
-      <button type="submit">Login</button>
-    </form>
-    <p>Don't have an account? <a href="/register">Register</a></p>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required><br>
+
+        <button type="submit">Login</button>
+      </form>
+      <p>Don't have an account? <a href="/register">Register</a></p>
+    </div>
+    <% } else { %>
+      <p>You are already logged in!</p>
+      <%- include('./partials/logout.ejs') %>
+    <% } %>
   </div>
-  <% } else { %>
-    <p>You are already logged in!</p>
-    <%- include('./partials/logout.ejs') %>
-  <% } %>
 
   <script>
     const errorMessage = document.getElementById('error-message');
 
-    // Assuming your server responds with an "error" message on failed login
-    console.log(window.location.search); // Log the query string for debugging
-if (window.location.search.includes('error=true')) {
-  errorMessage.textContent = 'Invalid username or password.';
-}
+    // Clear any previous error messages
+    errorMessage.textContent = '';
 
+    // Assuming your server responds with an error message in the response body on failed login
+    fetch('/login', {
+      method: 'POST',
+      // ... form data
+    })
+    .then(response => response.json()) // Parse JSON response (assuming your server sends JSON)
+    .then(data => {
+      if (data.error) {
+        errorMessage.textContent = data.error; // Set error message from server response
+      } else {
+        // Handle successful login (redirect, etc.)
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      // Handle other errors (e.g., network issues)
+    });
   </script>
 </body>
 </html>

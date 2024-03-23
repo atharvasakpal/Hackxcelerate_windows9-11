@@ -3,19 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>pairdevice
-    </title>
+    <title>Pair Device</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 50px auto;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        nav {
+            background-color: #333;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        nav a:hover {
+            background-color: #555;
+        }
+
+        .home-button {
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
-    <h1 align="center"> pair device</h1>
-    <form action="/pairdevice" method="post" align="center">
-        <input type="text" name="ipaddress" placeholder="Enter ip address">
-        <input type="text" name="pairingport" id=""placeholder='Enter port'>
-        <input type="text" name="password" id="" placeholder="enter key"> <button>pair device</button><br>
-        <!-- <input type="text" name="port" id="" placeholder="enter connection port"> --> 
-        
-        
-    </form>
-    <a href="/homepage">home page</a>
+    <nav>
+        <a href="/homepage" class="home-button">Home Page</a>
+    </nav>
+    <div class="container">
+        <h1>Pair Device</h1>
+        <form action="/pairdevice" method="post">
+            <input type="text" name="ipaddress" placeholder="Enter IP address" required><br>
+            <input type="text" name="pairingport" placeholder="Enter port" required><br>
+            <input type="text" name="password" placeholder="Enter key" required><br>
+            <button type="submit">Pair Device</button>
+        </form>
+    </div>
 </body>
 </html>
