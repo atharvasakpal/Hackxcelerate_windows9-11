@@ -5,11 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Device Properties</title>
     <style>
+        /* CSS Styles */
         body {
             font-family: Arial, sans-serif;
             background-color: #f0f0f0;
             margin: 0;
             padding: 0;
+        }
+        .navbar {
+            background-color: #333;
+            overflow: hidden;
+            position: relative;
+        }
+        .navbar a {
+            float: left;
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+        .navbar a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+        .navbar .middle {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
         }
         .container {
             max-width: 600px;
@@ -36,16 +59,82 @@
     </style>
 </head>
 <body>
-    <a href="/homepage">home page</a>
+    <div class="navbar">
+        <a href="#" class="active">Device Properties</a>
+        <a href="/homepage" class="middle"><b>Home Page</b></a>
+    </div>
     <div class="container">
         <h1>Device Properties</h1>
         <ul>
-            <% Object.keys(properties).forEach(key => { %>
-                <li><strong><%= key %>:</strong> <%= properties[key] %></li>
-            <% }); %>
+            <!-- Python script to parse provided output -->
+            <% 
+            // Provided output
+            var output = `
+            [persist.sys.oppo.serialno]: [IGAGDFAEHDGDHDG]
+            [ro.board.platform]: [mt6785]
+            [ro.boot.hardware]: [mt6785]
+            [ro.boot.product.hardware.sku]: [dsds]
+            [ro.boot.serialno]: [JRHULR7TWSX89PEI]
+            [ro.build.version.sdk]: [30]
+            [ro.dolby.brand]: [OPPO]
+            [ro.dolby.manufacturer]: [OPPO]
+            [ro.dolby.model]: [PAFM00]
+            [ro.frp.pst]: [/dev/block/platform/bootdevice/by-name/frp]
+            [ro.hardware]: [mt6785]
+            [ro.hardware.egl]: [mali]
+            [ro.mediatek.platform]: [MT6785]
+            [ro.opa.device_model_id]: [ga-what-can-this-phone-do-what-can-this-phone-do-njtdvq]
+            [ro.product.bootimage.brand]: [realme]
+            [ro.product.bootimage.manufacturer]: [realme]
+            [ro.product.bootimage.model]: [RMX2001]
+            [ro.product.brand]: [realme]
+            [ro.product.brand.sub]: [realme]
+            [ro.product.brand.ui]: [realmeUI]
+            [ro.product.build.version.sdk]: [30]
+            [ro.product.manufacturer]: [realme]
+            [ro.product.model]: [RMX2001]
+            [ro.product.name]: [RMX2001]
+            [ro.product.odm.brand]: [realme]
+            [ro.product.odm.manufacturer]: [realme]
+            [ro.product.odm.model]: [RMX2001]
+            [ro.product.product.brand]: [realme]
+            [ro.product.product.manufacturer]: [realme]
+            [ro.product.product.model]: [RMX2001]
+            [ro.product.product.name]: [RMX2001]
+            [ro.product.system.brand]: [realme]
+            [ro.product.system.manufacturer]: [realme]
+            [ro.product.system.model]: [RMX2001]
+            [ro.product.system_ext.brand]: [realme]
+            [ro.product.system_ext.manufacturer]: [realme]
+            [ro.product.system_ext.model]: [RMX2001]
+            [ro.product.vendor.brand]: [realme]
+            [ro.product.vendor.manufacturer]: [realme]
+            [ro.product.vendor.model]: [RMX2001]
+            [ro.revision]: [0]
+            [ro.serialno]: [JRHULR7TWSX89PEI]
+            [ro.system.build.version.sdk]: [30]
+            [ro.system_ext.build.version.sdk]: [30]
+            [ro.vendor.mediatek.platform]: [MT6785]
+            [sys.theia.focus_pkg]: [air.com.ubisoft.brawl.halla.platform.fighting.action.pvp]
+            `;
+            
+            // Parse the output
+            var parsed_output = {};
+            output.trim().split('\n').forEach(function(line) {
+                var key_value = line.trim().slice(1, -1).split(']: [');
+                var key = key_value[0].split('.').pop();
+                var value = key_value[1];
+                parsed_output[key] = value;
+            });
+            
+            // Display parsed output in HTML
+            Object.keys(parsed_output).forEach(function(key) {
+                %>
+                <li><strong><%= key %>:</strong> <%= parsed_output[key] %></li>
+                <%
+            });
+            %>
         </ul>
     </div>
-
-    
 </body>
 </html>
