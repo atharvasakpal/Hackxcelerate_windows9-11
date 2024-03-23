@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Device Properties</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        strong {
+            color: #27ae60; /* Green color */
+        }
+    </style>
+</head>
+<body>
+    <a href="/homepage">home page</a>
+    <div class="container">
+        <h1>Device Properties</h1>
+        <ul>
+            <% Object.keys(properties).forEach(key => { %>
+                <li><strong><%= key %>:</strong> <%= properties[key] %></li>
+            <% }); %>
+        </ul>
+    </div>
+
+    
+</body>
+</html>

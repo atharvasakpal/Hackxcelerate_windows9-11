@@ -396,54 +396,59 @@ app.post('/deviceDetails',(req,res)=>{
    
   const detailsDevice = req.body.deviceDetails;
  
- exec(`adb -s ${detailsDevice} shell dumpsys battery`, (error, stdout, stderr) => {
-   if (error) {
-     res.status(500).send(`Error: ${error.message}`);
-     return;
-   }
-   
-   const batteryInfo = stdout.split('\n').find(line => line.includes('level'));
-   
-     const batteryPercentage = batteryInfo.match(/\d+/)[0];
-     // res.send(`Battery Percentage: ${batteryPercentage}%`);
-     console.log(batteryPercentage);
-   
- });
- res.render('showDeviceDetails',{batteryPercentage});
+  exec(`adb -s ${detailsDevice} shell "getprop | grep -e \'model\' -e \'version.sdk\' -e \'manufacturer\' -e \'hardware\' -e \'platform\' -e \'revision\' -e \'serialno\' -e \'product.name\' -e \'brand\'"`, (error, stdout, stderr) => {
+    if (error) {
+        console.error(`Error executing ADB command: ${error}`);
+        return res.status(500).json({ error: 'An error occurred' });
+    }
+    if (stderr) {
+        console.error(`ADB command error: ${stderr}`);
+        return res.status(500).json({ error: 'An error occurred' });
+    }
+    // Split the output into lines and parse relevant properties
+    const properties = {};
+    stdout.split('\n').filter(Boolean).forEach(line => {
+        const [key, value] = line.split(':').map(part => part.trim());
+        properties[key] = value;
+    });
+    // res.json(properties);
+    res.render('Details',{properties})
+});
+//  res.render('showDeviceDetails',{batteryPercentage});
 });
 
 
 
 app.get('/openADBshell',(req,res)=>{
-  exec(`adb devices`,(error,stdout,stderr)=>{
-    //error handling
-    if (error) {
-      console.error(`Error: ${error.message}`);
-      return res.status(500).send('Error occurred');
-    }
-    if (stderr) {
-      console.error(`ADB Error: ${stderr}`);
-      return res.status(500).send('ADB Error occurred');
-    }
+  // exec(`adb devices`,(error,stdout,stderr)=>{
+  //   //error handling
+  //   if (error) {
+  //     console.error(`Error: ${error.message}`);
+  //     return res.status(500).send('Error occurred');
+  //   }
+  //   if (stderr) {
+  //     console.error(`ADB Error: ${stderr}`);
+  //     return res.status(500).send('ADB Error occurred');
+  //   }
   
-    //showing the devices
-    const devices= stdout.split('\n').slice(1).filter(line => line.trim() !== '').map(line => {
-      const [device, state] = line.trim().split('\t');
-      return { device, state };
-    });
-    //get the list of deviceNames
-    // let deviceName = [];
-    // for (i of devices){
-    //   // deviceName.push(exec(`adb -s ${i['device']} shell getprop ro.product.marketname`));
-    //   deviceName.push(i['device']);
-    // }
-    // res.send(deviceName);
-    // res.send(devices);
+  //   //showing the devices
+  //   const devices= stdout.split('\n').slice(1).filter(line => line.trim() !== '').map(line => {
+  //     const [device, state] = line.trim().split('\t');
+  //     return { device, state };
+  //   });
+  //   //get the list of deviceNames
+  //   // let deviceName = [];
+  //   // for (i of devices){
+  //   //   // deviceName.push(exec(`adb -s ${i['device']} shell getprop ro.product.marketname`));
+  //   //   deviceName.push(i['device']);
+  //   // }
+  //   // res.send(deviceName);
+  //   // res.send(devices);
 
 
-    // const openShell = req.body.openADBshell;
+  //   // const openShell = req.body.openADBshell;
     // res.send('Post request working');
-    const command  = `.\commandprompt.bat `;
+    const command  = `adbshell.bat `;
     //executing the batch file with the IP address passed as an argument
     exec(command, (error,stdout,stderr)=>{
       if(error){
@@ -456,7 +461,7 @@ app.get('/openADBshell',(req,res)=>{
     })
     //  res.render('openADBshell',{devices});
 })
-})
+
 
 // app.post('/openADBshell',(req,res)=>{
     
