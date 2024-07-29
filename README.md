@@ -8,7 +8,7 @@ Also included the functionality of android sceen mirroring using SCRCPY.
 Login Authentication included and passwords stored in the database after hashing via bcrypt.
 
 
-
+[![how to open](https://raw.githubusercontent.com/atharvasakpal/Hackxcelerate_windows9-11/main/screenshots/ADB)]
 ## API Reference
 
 #### To show all connected devices
