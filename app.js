@@ -70,7 +70,7 @@ app.get('/account', verifyToken, async (req, res) => {
 
 module.exports = { verifyToken };
 // Connect to MongoDB
-mongoose.connect('mongodb+srv://keyur:IAMjamesbond007!@cluster0.0yd6eom.mongodb.net/', {
+mongoose.connect('mongodb+srv://demouser:demouser@waspmote.gp4logi.mongodb.net/', {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })
@@ -86,9 +86,9 @@ app.use(session({
   resave: false,
   saveUninitialized: true,
   store: MongoStore.create({ 
-    mongoUrl: 'mongodb+srv://keyur:IAMjamesbond007!@cluster0.0yd6eom.mongodb.net/',
-    dbName: 'passport',
-    collectionName: 'sessions'
+    mongoUrl: 'mongodb+srv://demouser:demouser@waspmote.gp4logi.mongodb.net/',
+    dbName: 'Button',
+    collectionName: 'LED'
   }),
   cookie: {
     maxAge: 1000 * 60 * 60 * 24 // 1 day
