@@ -4,11 +4,18 @@
 A web-app which makes handling multiple android devices/ emulators easier. 
 The devices are connected wirelessly by TCP/IP connection and the system files and be monitored and modified using Android Device Bridge.
 Also included the functionality of android sceen mirroring using SCRCPY.
-
+https://github.com/atharvasakpal/Hackxcelerate_windows9-11/blob/main/screenshots/ADB.mp4
 Login Authentication included and passwords stored in the database after hashing via bcrypt.
 
 
-[![how to open](https://raw.githubusercontent.com/atharvasakpal/Hackxcelerate_windows9-11/blob/main/screenshots/ADB.mp4)]
+
+
+
+https://github.com/user-attachments/assets/dcb51156-8a72-49bd-877e-b9bf2f9fb38f
+
+
+
+
 ## API Reference
 
 #### To show all connected devices
