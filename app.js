@@ -10,8 +10,9 @@ const LocalStrategy = require('passport-local').Strategy;
 const crypto = require('crypto');
 const adb = require('adbkit'); 
 const path =  require('path');
-
+const flash =require('connect-flash');
 const client = adb.createClient();
+
 const disconnectDevices = (req, res, next) => {
   // Execute ADB command to disconnect devices
   exec('adb disconnect', (error, stdout, stderr) => {
@@ -69,6 +70,9 @@ app.get('/account', verifyToken, async (req, res) => {
 });
 
 module.exports = { verifyToken };
+
+
+
 // Connect to MongoDB
 mongoose.connect('mongodb+srv://demouser:demouser@waspmote.gp4logi.mongodb.net/', {
   useNewUrlParser: true,
@@ -94,6 +98,17 @@ app.use(session({
     maxAge: 1000 * 60 * 60 * 24 // 1 day
   }
 }));
+
+//flash middleware
+app.use(flash());
+
+//middleware for flash
+app.use((req,res,next)=>{
+  res.locals.currentUser = req.user;
+res.locals.success = req.flash('success');
+  res.locals.erorr = req.flash('error');
+next();
+}) 
 
 // Passport middleware
 app.use(passport.initialize());
@@ -134,6 +149,10 @@ passport.deserializeUser(async (id, done) => {
     done(error);
   }
 });
+
+
+
+
 
 // Set view engine
 app.set('view engine', 'ejs');
@@ -211,18 +230,25 @@ app.get('/homepage', (req, res) => {
     // Render the homepage content here
     res.render('homepage', { user: req.user }); // Optional: Pass user data to the template
   } else {
+    req.flash('error','User not logged in !!! ');
     res.redirect('/login');
   }
 });
 
 app.get('/connecteddevices',(req,res)=>{
-  res.render('connecteddevices.ejs');
+  if(req.isAuthenticated()){
+  res.render('connecteddevices.ejs');}
+
+  else {
+    res.redirect('/login');
+  }
 })
 
 
 
 app.post('/connecteddevices',(req,res)=>{
-  // res.send('post request successful!') 
+  // res.send('post request successful!')
+   
   exec(`adb devices`,(error,stdout,stderr)=>{
     //error handling
     if (error) {
@@ -258,7 +284,12 @@ app.post('/connecteddevices',(req,res)=>{
 
 
 app.get('/pairdevice',(req,res)=>{
-res.render('pairdevice.ejs');
+  if(req.isAuthenticated())
+  {
+res.render('pairdevice.ejs');}
+else {
+  res.redirect('/login');
+}
 })
 
 app.post('/pairdevice',(req,res)=>{
@@ -282,7 +313,13 @@ app.post('/pairdevice',(req,res)=>{
   
 
 app.get('/connectDevice',(req,res)=>{
-  res.render('connectDevice');
+  if(req.isAuthenticated()){
+  res.render('connectDevice');}
+  else {
+    res.redirect('/login');
+  }
+
+
 })    
 app.post('/connectDevice',(req,res)=>{
   const {port} = req.body; 
@@ -308,6 +345,8 @@ app.post('/connectDevice',(req,res)=>{
 });
 
 app.get('/screenmirror',(req,res)=>{
+  if(req.isAuthenticated())
+  {
 
   exec(`adb devices`,(error,stdout,stderr)=>{
     //error handling
@@ -334,7 +373,10 @@ app.get('/screenmirror',(req,res)=>{
     // res.send(deviceName);
     // res.send(devices);
      res.render('screenmirror',{devices});
-  }) 
+  }) }
+  else {
+    res.redirect('/login');
+  }
 
   app.post('/screenmirror',(req,res)=>{
   
@@ -361,6 +403,8 @@ app.get('/screenmirror',(req,res)=>{
   });
 
   app.get('/deviceDetails',(req,res)=>{
+    if(req.isAuthenticated())
+    {
 
     exec(`adb devices`,(error,stdout,stderr)=>{
       //error handling
@@ -387,8 +431,14 @@ app.get('/screenmirror',(req,res)=>{
       // res.send(deviceName);
       // res.send(devices);
        res.render('deviceDetails',{devices});
-    }) 
+    })
+  } 
+  else {
+    res.redirect('/login');
+  }
   })
+
+
 
 
 app.post('/deviceDetails',(req,res)=>{
