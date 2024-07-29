@@ -14,13 +14,13 @@ Login Authentication included and passwords stored in the database after hashing
 #### To show all connected devices
 
 ```cmd
-  adb devices
+adb devices
 ```
 
 #### To use Screen Mirroring
 
 ```cmd
-  scrcpy -s <device>
+scrcpy -s <device>
 ```
 
 
@@ -31,7 +31,7 @@ git clone the project and use npm
 
 Install Dependencies :-
 ```sh
-  npm i
+npm i
 ```
 Run 
 ```sh
