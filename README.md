@@ -13,13 +13,13 @@ Login Authentication included and passwords stored in the database after hashing
 
 #### To show all connected devices
 
-```http
+```cmd
   adb devices
 ```
 
 #### To use Screen Mirroring
 
-```http
+```cmd
   scrcpy -s <device>
 ```
 
@@ -29,10 +29,16 @@ Login Authentication included and passwords stored in the database after hashing
 
 git clone the project and use npm
 
-```bash
+Install Dependencies :-
+```sh
   npm i
-  node app.js
 ```
+Run 
+```sh
+nodemon app.js
+```
+
+Note : This will work only when the MongoDB Server is On 
     
 ## Tech Stack
 
